@@ -12,7 +12,8 @@ ENV DEV_DEPS \
         socat \
         rsync \
         iproute2 \
-        gpg gpg-agent
+        gpg \
+        gpg-agent
 
 RUN set -eux \
   ; sed -i 's/\(.*\)\(security\|deb\).debian.org\(.*\)main/\1ftp.cn.debian.org\3main contrib non-free/g' /etc/apt/sources.list \
