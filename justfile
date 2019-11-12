@@ -14,8 +14,8 @@ test:
         -v $(pwd)/id_ecdsa.pub:/root/.ssh/authorized_keys \
         nnurphy/nwss
 
-client token:
-    websocat -E -b tcp-l:127.0.0.1:2288 ws://localhost:8090/websocat-{{token}}
+client url token:
+    websocat -E -b tcp-l:127.0.0.1:2288 ws://{{url}}/websocat-{{token}}
 
 
 tunnel url token:
@@ -32,3 +32,5 @@ tunnel url token:
 #     IdentitiesOnly yes
 #     IdentityFile ~/.ssh/id_ecdsa
 #     Port 2288
+#     StrictHostKeyChecking no
+#     UserKnownHostsFile /dev/null
