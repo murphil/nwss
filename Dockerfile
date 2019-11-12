@@ -9,6 +9,9 @@ ENV DEV_DEPS \
         curl \
         nginx \
         vim \
+        socat \
+        rsync \
+        iproute2 \
         gpg gpg-agent
 
 RUN set -eux \
