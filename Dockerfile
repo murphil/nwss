@@ -12,6 +12,7 @@ ENV DEV_DEPS \
         socat \
         rsync \
         iproute2 \
+        wget \
         gpg \
         gpg-agent
 
@@ -37,7 +38,7 @@ RUN set -eux \
   ; rm -rf /etc/nginx/sites-available/* \
   ; rm -rf /etc/nginx/sites-enabled/* \
   \
-  ; curl ${websocat_url} > /usr/local/bin/websocat \
+  ; wget -q -O /usr/local/bin/websocat ${websocat_url} \
     ; chmod a+x /usr/local/bin/websocat
 
 COPY services.d /etc/services.d
