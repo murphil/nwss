@@ -1,0 +1,53 @@
+FROM alpine:3.10
+
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
+ENV websocat_version=1.5.0
+ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
+ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
+ENV DEV_DEPS \
+        openssh-server \
+        curl \
+        nginx \
+        bash \
+        vim \
+        socat \
+        rsync \
+        iproute2 \
+        wget
+
+RUN set -eux \
+  ; sed -i 's/dl-cdn.alpinelinux.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
+  ; apk update \
+  ; apk upgrade \
+  ; apk add --no-cache \
+    tzdata \
+		$DEV_DEPS \
+  ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
+  ; curl --fail --silent -L ${s6url} | \
+    tar xzvf - -C / \
+  \
+  ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
+  ; echo "$TIMEZONE" > /etc/timezone \
+  \
+  ; sed -i 's/root:!/root:*/g' /etc/shadow \
+  ; sed -i 's!.*\(ChallengeResponseAuthentication\).*yes!\1 no!' /etc/ssh/sshd_config \
+  ; sed -i 's!.*\(PasswordAuthentication\).*yes!\1 no!' /etc/ssh/sshd_config \
+  \
+  ; mkdir -p /run/sshd \
+  ; mkdir -p /run/nginx \
+  \
+  ; sed -i '1i\daemon off;' /etc/nginx/nginx.conf \
+  ; rm -rf /etc/nginx/sites-available/* \
+  ; rm -rf /etc/nginx/sites-enabled/* \
+  \
+  ; wget -q -O /usr/local/bin/websocat ${websocat_url} \
+    ; chmod a+x /usr/local/bin/websocat
+
+COPY services.d /etc/services.d
+COPY nginx.default.conf /etc/nginx/conf.d/default.conf
+WORKDIR /srv
+
+VOLUME [ "/srv", "/root/.vscode-server" ]
+EXPOSE 80
+
+ENTRYPOINT [ "/init" ]
