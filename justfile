@@ -26,10 +26,7 @@ client url token:
 
 
 tunnel url token:
-    docker run --rm \
-        --name=nwss \
-        -p 2288:8080 \
-        nnurphy/websocat -E -b \
+    websocat -E -b \
         tcp-l:127.0.0.1:8080 \
         ws://{{url}}/websocat-{{token}}
 
