@@ -9,6 +9,10 @@ build-apk:
         --build-arg s6url=http://172.178.1.204:2015/s6-overlay-amd64.tar.gz \
         --build-arg websocat_url=http://172.178.1.204:2015/tools/websocat_amd64-linux-static%2Budp
 
+build-node:
+    docker build . -t nnurphy/nwss:node \
+        -f Dockerfile-node
+
 #-v $(pwd)/location:/etc/nginx/location \
 test tag="latest":
     docker run --rm \

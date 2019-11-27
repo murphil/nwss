@@ -1,0 +1,20 @@
+FROM nnurphy/nwss:alpine
+
+RUN set -eux \
+  ; apk add --no-cache nodejs \
+  ; mkdir -p /etc/nginx/location \
+  ; mkdir -p /etc/services.d/node \
+  ; { echo '#!/usr/bin/env sh' \
+    ; echo 'echo >&2 "nodejs exited. code=${1}"' \
+    ; \
+    } > /etc/services.d/node/finish \
+  ; { echo '#!/usr/bin/with-contenv bash' \
+    ; echo 'echo >&2 "starting nodejs"' \
+    ; echo 'cd /srv' \
+    ; echo 'exec node index.js' \
+    ; \
+    } > /etc/services.d/node/run \
+  ; chmod a+x /etc/services.d/node/* \
+  ; sed -i '/location \/ {/,/}/d' /etc/nginx/conf.d/default.conf
+
+COPY location/node.conf /etc/nginx/location
