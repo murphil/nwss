@@ -9,6 +9,7 @@ build-apk:
         --build-arg s6url=http://172.178.1.204:2015/s6-overlay-amd64.tar.gz \
         --build-arg websocat_url=http://172.178.1.204:2015/tools/websocat_amd64-linux-static%2Budp
 
+#-v $(pwd)/location:/etc/nginx/location \
 test tag="latest":
     docker run --rm \
         --name=test \
@@ -19,7 +20,7 @@ test tag="latest":
         -e WEB_SERVERNAME=srv.1 \
         -e WS_FIXED=1 \
         -v $(pwd)/id_ecdsa.pub:/root/.ssh/authorized_keys \
-        nnurphy/nwss:{{tag}}
+        nnurphy/nwss
 
 client url token:
     websocat -E -b tcp-l:127.0.0.1:2288 ws://{{url}}/websocat-{{token}}

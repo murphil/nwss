@@ -49,3 +49,7 @@ VOLUME [ "/srv", "/root/.vscode-server" ]
 EXPOSE 80
 
 ENTRYPOINT [ "/init" ]
+
+ENV WEB_SERVERNAME=
+ENV WEB_ROOT=
+ENV WS_FIXED=
