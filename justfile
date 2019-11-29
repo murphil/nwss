@@ -21,8 +21,6 @@ test tag="latest":
         -v $(pwd):/app \
         -v vscode-server:/root/.vscode-server \
         -e WEB_ROOT=/app \
-        -e WEB_SERVERNAME=srv.1 \
-        -e WS_FIXED=1 \
         -v $(pwd)/id_ecdsa.pub:/root/.ssh/authorized_keys \
         nnurphy/nwss
 
