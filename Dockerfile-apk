@@ -45,7 +45,7 @@ RUN set -eux \
   ; wget -q -O /usr/local/bin/websocat ${websocat_url} \
     ; chmod a+x /usr/local/bin/websocat \
   ; wget -q -O- ${unison_url} \
-    | tar zxf - -C /usr/local/bin
+    | tar zxf - -C /usr/local/bin unison unison-fsmonitor
 
 COPY services.d /etc/services.d
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
