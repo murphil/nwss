@@ -58,3 +58,8 @@ ssh websocat
         secret:
           secretName: pubkey
 ```
+
+### unison
+```bash
+unison -repeat watch -batch . ssh://websocat//srv
+```
