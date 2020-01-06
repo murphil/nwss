@@ -18,11 +18,12 @@ test tag="latest":
     docker run --rm \
         --name=test \
         -p 8090:80 \
+        -p 8022:22 \
         -v $(pwd):/app \
         -v vscode-server:/root/.vscode-server \
         -e WEB_ROOT=/app \
-        -v $(pwd)/id_ecdsa.pub:/root/.ssh/authorized_keys \
-        nnurphy/nwss
+        -v $PWD/key.pub:/etc/authorized_keys/root \
+        nnurphy/nwss:alpine
 
 client url token:
     websocat -E -b tcp-l:127.0.0.1:2288 ws://{{url}}/websocat-{{token}}

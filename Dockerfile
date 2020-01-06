@@ -29,6 +29,7 @@ RUN set -eux \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   ; curl --fail --silent -L ${s6url} | \
     tar xzvf - -C / \
+  ; chmod go-w /etc \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
