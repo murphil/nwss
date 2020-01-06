@@ -3,7 +3,7 @@ FROM alpine:3.11
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
 ENV websocat_version=1.5.0
 ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
-ARG unison_url=https://iffy.me:8443/unison/unison-2.51.2.tar.gz
+ARG unison_url=https://iffy.me/pub/unison/unison-2.51.2.tar.gz
 ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
 ENV DEV_DEPS \
         openssh-server \
@@ -31,8 +31,12 @@ RUN set -eux \
   ; echo "$TIMEZONE" > /etc/timezone \
   \
   ; sed -i 's/root:!/root:*/g' /etc/shadow \
-  ; sed -i 's!.*\(ChallengeResponseAuthentication\).*yes!\1 no!' /etc/ssh/sshd_config \
-  ; sed -i 's!.*\(PasswordAuthentication\).*yes!\1 no!' /etc/ssh/sshd_config \
+  ; sed -i /etc/ssh/sshd_config \
+        -e 's!.*\(AllowTcpForwarding\).*!\1 yes!' \
+        -e 's!.*\(GatewayPorts\).*!\1 yes!' \
+        -e 's!.*\(AuthorizedKeysFile\).*!\1 /etc/authorized_keys/%u!' \
+        -e 's!.*\(ChallengeResponseAuthentication\).*yes!\1 no!' \
+        -e 's!.*\(PasswordAuthentication\).*yes!\1 no!' \
   \
   ; mkdir -p /run/sshd \
   ; mkdir -p /run/nginx \

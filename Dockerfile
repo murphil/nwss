@@ -3,7 +3,7 @@ FROM debian:10-slim
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
 ENV websocat_version=1.5.0
 ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
-ARG unison_url=https://iffy.me:8443/unison/unison-2.51.2.tar.gz
+ARG unison_url=https://iffy.me/pub/unison/unison-2.51.2.tar.gz
 ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
 ENV DEV_DEPS \
         openssh-server \
@@ -34,6 +34,10 @@ RUN set -eux \
   ; echo "$TIMEZONE" > /etc/timezone \
   \
   ; mkdir -p /var/run/sshd \
+  ; sed -i /etc/ssh/sshd_config \
+        -e 's!.*\(AuthorizedKeysFile\).*!\1 /etc/authorized_keys/%u!' \
+        -e 's!.*\(GatewayPorts\).*!\1 yes!' \
+        -e 's!.*\(PasswordAuthentication\).*yes!\1 no!' \
   \
   ; sed -i '1i\daemon off;' /etc/nginx/nginx.conf \
   ; rm -rf /etc/nginx/sites-available/* \
