@@ -12,7 +12,6 @@ ENV DEV_DEPS \
         nginx \
         bash \
         vim \
-        socat \
         rsync \
         iproute2 \
         wget
