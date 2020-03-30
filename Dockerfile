@@ -17,7 +17,6 @@ ENV DEV_DEPS \
         gpg-agent
 
 RUN set -eux \
-  ; sed -i 's/\(.*\)\(security\|deb\).debian.org\(.*\)main/\1ftp.cn.debian.org\3main contrib non-free/g' /etc/apt/sources.list \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
  		apt-transport-https \

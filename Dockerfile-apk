@@ -17,7 +17,6 @@ ENV DEV_DEPS \
         wget
 
 RUN set -eux \
-  ; sed -i 's/dl-cdn.alpinelinux.org/mirror.tuna.tsinghua.edu.cn/g' /etc/apk/repositories \
   ; apk update \
   ; apk upgrade \
   ; apk add --no-cache \
