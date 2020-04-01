@@ -6,6 +6,7 @@ ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_ve
 ARG unison_url=https://iffy.me/pub/unison/unison-2.51.2.tar.gz
 ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
 ENV DEV_DEPS \
+        locales \
         openssh-server \
         curl \
         nginx \
