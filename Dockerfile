@@ -31,6 +31,10 @@ RUN set -eux \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
+  ; sed -i /etc/locale.gen \
+		-e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
+		-e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
+	; locale-gen \
   \
   ; mkdir -p /var/run/sshd \
   ; sed -i /etc/ssh/sshd_config \
