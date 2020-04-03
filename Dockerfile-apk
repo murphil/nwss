@@ -3,7 +3,6 @@ FROM alpine:3.11
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
 ENV websocat_version=1.5.0
 ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
-ARG unison_url=https://iffy.me/pub/unison/unison-2.51.2.tar.gz
 ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
 ENV DEV_DEPS \
         openssh-server \
@@ -45,9 +44,7 @@ RUN set -eux \
   ; rm -rf /etc/nginx/sites-enabled/* \
   \
   ; wget -q -O /usr/local/bin/websocat ${websocat_url} \
-    ; chmod a+x /usr/local/bin/websocat \
-  ; wget -q -O- ${unison_url} \
-    | tar zxf - -C /usr/local/bin unison unison-fsmonitor
+    ; chmod a+x /usr/local/bin/websocat
 
 COPY services.d /etc/services.d
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
