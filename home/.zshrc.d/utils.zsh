@@ -14,14 +14,24 @@ function toggle-proxy {
         export http_proxy=$url
         export https_proxy=$url
         export no_proxy=localhost,127.0.0.0/8,*.local
-        #git config --global http.proxy $url
-        #git config --global https.proxy $url
     else
         echo "unset proxy"
         unset http_proxy
         unset https_proxy
-        #git config --global --unset http.proxy
-        #git config --global --unset https.proxy
+        unset no_proxy
+    fi
+}
+
+function toggle-git-proxy {
+    if [ -z "$(git config --global --get http.proxy)" ] || [ ! -z $1 ]; then
+        local url=${1:-http://localhost:1081}
+        echo "set git proxy to $url"
+        git config --global http.proxy $url
+        git config --global https.proxy $url
+    else
+        echo "unset git proxy"
+        git config --global --unset http.proxy
+        git config --global --unset https.proxy
     fi
 }
 
