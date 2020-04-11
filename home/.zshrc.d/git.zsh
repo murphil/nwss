@@ -14,7 +14,7 @@ function gpsu {
     eval $__default_indirect_object
     git push -u $y $z
 }
-alias gl='git log'
+alias gl='git log --oneline --decorate --graph'
 alias glp='git log -p'
 alias gly='git log --since=yesterday'
 alias glt='git log --since=today'
@@ -25,6 +25,7 @@ alias gd='git diff'
 alias gdc='git diff --cached'
 alias ga='git add .'
 alias gut='git reset HEAD --'
+alias grh='git reset --hard'
 alias grhh='git reset --hard HEAD'
 alias glst='git log -1 HEAD'
 alias gt='git tag'

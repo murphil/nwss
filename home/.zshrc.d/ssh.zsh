@@ -7,7 +7,8 @@ function s {
     local ignore_host_check=""
     local cmd="ssh "
     local show=""
-    eval set -- $(getopt -o VPIi:p:R:L:D: -- "$@")
+    local shell=""
+    eval set -- $(getopt -o VPIi:p:R:L:D:ZB -- "$@")
     while true; do
         case "$1" in
         -V)
@@ -39,6 +40,12 @@ function s {
             shift
             cmd+="-NTvD $1 "
             ;;
+        -B)
+            shell="/bin/bash -ic "
+            ;;
+        -Z)
+            shell="-t /bin/zsh -ic "
+            ;;
         --)
             shift
             break
@@ -50,7 +57,7 @@ function s {
     cmd+="${password}${ignore_host_check}$1"
     if [ ! -z $2 ]; then
         shift
-        cmd+=" $SHELL -ic '$@'"
+        cmd+=" ${shell}'$@'"
     fi
 
     if [ ! -z $show ]; then
