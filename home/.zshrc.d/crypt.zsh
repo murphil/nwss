@@ -2,6 +2,48 @@ function rnd {
     head /dev/urandom | tr -dc A-Za-z0-9 | head -c ${1:-13}
 }
 
+function gen-ssh-key {
+    local file='id_ed25519'
+    local comment=$(date -Iseconds)
+    local options=$(getopt -o c:f: -- "$@")
+    eval set -- "$options"
+    while true; do
+        case "$1" in
+        -c )
+            shift
+            comment="$1"
+            ;;
+        -f )
+            shift
+            file="$1"
+            ;;
+        -- )
+            shift
+            break
+            ;;
+        esac
+        shift
+    done
+    ssh-keygen -t ed25519 -f ${file} -C ${comment}
+    if (( $+commands[puttygen] )); then
+        puttygen ${file} -o ${file}.ppk
+    fi
+}
+
+alias ssh-copy-id-with-pwd='ssh-copy-id -o PreferredAuthentications=password -o PubkeyAuthentication=no -f -i'
+
+function gen-self-signed-cert {
+    openssl req \
+        -newkey rsa:4096 -nodes -sha256 -keyout $1.key \
+        -x509 -days 365 -out $1.crt \
+        -subj /CN=$1
+}
+
+function gen-wg-key {
+    umask 077 # default: 022
+    wg genkey | tee ${1:-wg} | wg pubkey > ${1:-wg}.pub
+}
+
 export PASSWORD_RULE_PATH=$HOME/.config/passwd
 if [ -d $PASSWORD_RULE_PATH ]; then
     chmod -R go-rwx $PASSWORD_RULE_PATH
@@ -54,45 +96,3 @@ function _comp_gpw {
 }
 
 compdef _comp_gpw gpw
-
-function gen-ssh-key {
-    local file='id_ed25519'
-    local comment=$(date -Iseconds)
-    local options=$(getopt -o c:f: -- "$@")
-    eval set -- "$options"
-    while true; do
-        case "$1" in
-        -c )
-            shift
-            comment="$1"
-            ;;
-        -f )
-            shift
-            file="$1"
-            ;;
-        -- )
-            shift
-            break
-            ;;
-        esac
-        shift
-    done
-    ssh-keygen -t ed25519 -f ${file} -C ${comment}
-    if (( $+commands[puttygen] )); then
-        puttygen ${file} -o ${file}.ppk
-    fi
-}
-
-alias ssh-copy-id-with-pwd='ssh-copy-id -o PreferredAuthentications=password -o PubkeyAuthentication=no -f -i'
-
-function gen-self-signed-cert {
-    openssl req \
-        -newkey rsa:4096 -nodes -sha256 -keyout $1.key \
-        -x509 -days 365 -out $1.crt \
-        -subj /CN=$1
-}
-
-function gen-wg-key {
-    umask 077 # default: 022
-    wg genkey | tee ${1:-wg} | wg pubkey > ${1:-wg}.pub
-}

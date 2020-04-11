@@ -1,3 +1,7 @@
+function re-zsh {
+    source ~/.zshrc
+}
+
 #[Esc][h] man 当前命令时，显示简短说明
 alias run-help >&/dev/null && unalias run-help
 autoload run-help

@@ -42,7 +42,7 @@ function _comp_entf {
 
 compdef _comp_entf entf
 
-function tun {
+function wstun {
     local listen="127.0.0.1:2288"
     local url
     local cmd
