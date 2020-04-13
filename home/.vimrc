@@ -40,6 +40,7 @@ let mapleader="\<Space>"
 
 
 set expandtab
+set tabstop=4
 set shiftwidth=4
 set autoindent
 "插入模式下，“←”如何删除光标前的字符：行首空白、换行符、插入点之前的字符
