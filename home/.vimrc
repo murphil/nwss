@@ -1,18 +1,16 @@
 set nocompatible
-
-set linespace=2
-
-syntax on
-colorscheme desert
-
 " 简洁启动模式
 set shortmess=atI
-" set guioptions=gmrLtT  m:菜单 T:工具栏 r:滚动条
-set guioptions=gLt
+
+syntax on
+colorscheme koehler
+
 " 在状态栏位置显示补全菜单
-"set wildmenu
-set cmdheight=1
+set wildmenu
+set number
 set ruler
+"set cmdheight=1
+"set linespace=2
 
 " 显示不完整的段落
 set display=lastline

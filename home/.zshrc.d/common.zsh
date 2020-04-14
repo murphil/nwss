@@ -12,7 +12,7 @@ setopt complete_in_word
 # limit coredumpsize 0
 
 #键绑定风格 (e)macs|(v)i
-bindkey -e
+bindkey -v
 #设置 [DEL]键 为向后删除
 bindkey "\e[3~" delete-char
 
