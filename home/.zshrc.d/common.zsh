@@ -11,13 +11,13 @@ setopt complete_in_word
 #禁用 core dumps
 # limit coredumpsize 0
 
-#Emacs风格 键绑定
+#键绑定风格 (e)macs|(v)i
 bindkey -e
 #设置 [DEL]键 为向后删除
 bindkey "\e[3~" delete-char
 
 #以下字符视为单词的一部分
-WORDCHARS='*[]~#%^(){}<>'
+WORDCHARS='-*[]~#%^<>{}'
 
 ###### title
 case $TERM in (*xterm*|*rxvt*|(dt|k|E)term)
