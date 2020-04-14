@@ -12,7 +12,7 @@ setopt complete_in_word
 # limit coredumpsize 0
 
 #键绑定风格 (e)macs|(v)i
-bindkey -v
+bindkey -e
 #设置 [DEL]键 为向后删除
 bindkey "\e[3~" delete-char
 
@@ -43,9 +43,7 @@ function p { pgrep -a "$*" }
 __default_indirect_object="local z=\${@: -1} y=\$1 && [[ \$z == \$1 ]] && y=\"\$default\""
 
 
-if [ -x "$(command -v nvim)" ]; then
-    alias v='nvim'
-elif [ -x "$(command -v vim)" ]; then
+if [ -x "$(command -v vim)" ]; then
     alias v='vim'
 else
     alias v='vi'
