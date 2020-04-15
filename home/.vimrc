@@ -45,7 +45,7 @@ set hlsearch
 nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " 设定折叠方式
-"set foldmethod=manual
+set foldmethod=marker
 
 " 以下字符将被视为单词的一部分 (ASCII)：
 "set iskeyword+=33-47,58-64,91-96,123-128
