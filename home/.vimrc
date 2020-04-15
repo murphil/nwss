@@ -41,6 +41,8 @@ set incsearch
 set ignorecase
 " 高亮显示搜索结果
 set hlsearch
+" 清除高亮
+nnoremap <silent> <C-l> :<C-u>nohlsearch<CR><C-l>
 
 " 设定折叠方式
 "set foldmethod=manual

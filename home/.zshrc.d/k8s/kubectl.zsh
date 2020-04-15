@@ -143,6 +143,10 @@ alias kepvc="$KUBECTL_CMD edit pvc"
 alias kdpvc="$KUBECTL_CMD describe pvc"
 alias kdelpvc="$KUBECTL_CMD delete pvc"
 
+# top
+alias ktn="$KUBECTL_CMD top node"
+alias ktp="$KUBECTL_CMD top pod"
+
 if (( $+commands[helm] )); then
     __HELM_COMPLETION_FILE="${HOME}/.zsh_cache/helm_completion"
 
