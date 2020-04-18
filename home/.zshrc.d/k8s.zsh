@@ -25,7 +25,9 @@ if [ ! -z $KUBECTL ]; then
     fi
 
     function clean-evicted-pod {
-        kubectl get pods --all-namespaces -ojson | jq -r '.items[] | select(.status.reason!=null) | select(.status.reason | contains("Evicted")) | .metadata.name + " " + .metadata.namespace' | xargs -n2 -l bash -c 'kubectl delete pods $0 --namespace=$1'
+        $KUBECTL get pods --all-namespaces -ojson \
+          | jq -r '.items[] | select(.status.reason!=null) | select(.status.reason | contains("Evicted")) | .metadata.name + " " + .metadata.namespace' \
+          | xargs -n2 -l bash -c "$KUBECTL delete pods \$0 --namespace=\$1"
     }
 
     function dplm {

@@ -29,10 +29,10 @@ alias dh="$CRICTL history"
 alias dhl="$CRICTL history --no-trunc"
 alias dis="$CRICTL inspect"
 
-alias dc="$CRICTL-compose"
-alias dcu="$CRICTL-compose up"
-alias dcud="$CRICTL-compose up -d"
-alias dcd="$CRICTL-compose down"
+alias dc="docker-compose"
+alias dcu="docker-compose up"
+alias dcud="docker-compose up -d"
+alias dcd="docker-compose down"
 
 function da {
     if [ $# -gt 1 ]; then
