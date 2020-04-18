@@ -27,7 +27,7 @@ zmodload zsh/datetime
 
 # Default values for the prompt
 # Override these values in ~/.zshrc
-KUBE_PS1_BINARY="${KUBECTL_CMD:-kubectl}"
+KUBE_PS1_BINARY="${KUBECTL:-kubectl}"
 KUBE_PS1_SYMBOL_ENABLE="${KUBE_PS1_SYMBOL_ENABLE:-true}"
 KUBE_PS1_SYMBOL_DEFAULT="${KUBE_PS1_SYMBOL_DEFAULT:-\u2388 }"
 KUBE_PS1_SYMBOL_USE_IMG="${KUBE_PS1_SYMBOL_USE_IMG:-false}"

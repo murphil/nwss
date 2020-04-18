@@ -1,9 +1,9 @@
-if (( $+commands[kubectl] )); then
+if (( $+commands[$KUBECTL] )); then
     __KUBECTL_COMPLETION_FILE="${HOME}/.zsh_cache/kubectl_completion"
 
     if [[ ! -f $__KUBECTL_COMPLETION_FILE ]]; then
         mkdir -p ${HOME}/.zsh_cache
-        kubectl completion zsh >! $__KUBECTL_COMPLETION_FILE
+        $KUBECTL completion zsh >! $__KUBECTL_COMPLETION_FILE
     fi
 
     [[ -f $__KUBECTL_COMPLETION_FILE ]] && source $__KUBECTL_COMPLETION_FILE
@@ -12,140 +12,140 @@ if (( $+commands[kubectl] )); then
 fi
 
 # This command is used a LOT both below and in daily life
-alias k=$KUBECTL_CMD
-alias kg="$KUBECTL_CMD get"
-alias kd="$KUBECTL_CMD describe"
-alias ke="$KUBECTL_CMD edit"
-alias kc="$KUBECTL_CMD create"
+alias k=$KUBECTL
+alias kg="$KUBECTL get"
+alias kd="$KUBECTL describe"
+alias ke="$KUBECTL edit"
+alias kc="$KUBECTL create"
 
-# Execute a $KUBECTL_CMD command against all namespaces
-alias kca="f(){ $KUBECTL_CMD \"\$@\" --all-namespaces;  unset -f f; }; f"
+# Execute a $KUBECTL command against all namespaces
+alias kca="f(){ $KUBECTL \"\$@\" --all-namespaces;  unset -f f; }; f"
 
 # Apply a YML file
-alias kaf="$KUBECTL_CMD apply -f"
+alias kaf="$KUBECTL apply -f"
 # Apply resources from a directory containing kustomization.yaml
-alias kak="$KUBECTL_CMD apply -k"
+alias kak="$KUBECTL apply -k"
 
 # Drop into an interactive terminal on a container
-alias keti="$KUBECTL_CMD exec -ti"
-alias kat="$KUBECTL_CMD exec -ti"
+alias keti="$KUBECTL exec -ti"
+alias kat="$KUBECTL exec -ti"
 
 # Manage configuration quickly to switch contexts between local, dev ad staging.
-alias kcuc="$KUBECTL_CMD config use-context"
-alias kcsc="$KUBECTL_CMD config set-context"
-alias kcdc="$KUBECTL_CMD config delete-context"
-alias kccc="$KUBECTL_CMD config current-context"
+alias kcuc="$KUBECTL config use-context"
+alias kcsc="$KUBECTL config set-context"
+alias kcdc="$KUBECTL config delete-context"
+alias kccc="$KUBECTL config current-context"
 
 # List all contexts
-alias kcgc="$KUBECTL_CMD config get-contexts"
+alias kcgc="$KUBECTL config get-contexts"
 
 # General aliases
-alias kdel="$KUBECTL_CMD delete"
-alias kdelf="$KUBECTL_CMD delete -f"
-alias kdelk="$KUBECTL_CMD delete -k"
+alias kdel="$KUBECTL delete"
+alias kdelf="$KUBECTL delete -f"
+alias kdelk="$KUBECTL delete -k"
 
 # Pod management.
-alias kgp="$KUBECTL_CMD get pods"
+alias kgp="$KUBECTL get pods"
 alias kgpw="kgp --watch"
 alias kgpwide="kgp -o wide"
-alias kep="$KUBECTL_CMD edit pods"
-alias kdp="$KUBECTL_CMD describe pods"
-alias kdelp="$KUBECTL_CMD delete pods"
+alias kep="$KUBECTL edit pods"
+alias kdp="$KUBECTL describe pods"
+alias kdelp="$KUBECTL delete pods"
 
 # get pod by label: kgpl "app=myapp" -n myns
 alias kgpl="kgp -l"
 
 # Service management.
-alias kgs="$KUBECTL_CMD get svc"
+alias kgs="$KUBECTL get svc"
 alias kgsw="kgs --watch"
 alias kgswide="kgs -o wide"
-alias kes="$KUBECTL_CMD edit svc"
-alias kds="$KUBECTL_CMD describe svc"
-alias kdels="$KUBECTL_CMD delete svc"
+alias kes="$KUBECTL edit svc"
+alias kds="$KUBECTL describe svc"
+alias kdels="$KUBECTL delete svc"
 
 # Ingress management
-alias kgi="$KUBECTL_CMD get ingress"
-alias kei="$KUBECTL_CMD edit ingress"
-alias kdi="$KUBECTL_CMD describe ingress"
-alias kdeli="$KUBECTL_CMD delete ingress"
+alias kgi="$KUBECTL get ingress"
+alias kei="$KUBECTL edit ingress"
+alias kdi="$KUBECTL describe ingress"
+alias kdeli="$KUBECTL delete ingress"
 
 # Namespace management
-alias kgns="$KUBECTL_CMD get namespaces"
-alias kens="$KUBECTL_CMD edit namespace"
-alias kdns="$KUBECTL_CMD describe namespace"
-alias kcns="$KUBECTL_CMD create namespace"
-alias kdelns="$KUBECTL_CMD delete namespace"
-alias kcn="$KUBECTL_CMD config set-context \$(\$KUBECTL_CMD config current-context) --namespace"
+alias kgns="$KUBECTL get namespaces"
+alias kens="$KUBECTL edit namespace"
+alias kdns="$KUBECTL describe namespace"
+alias kcns="$KUBECTL create namespace"
+alias kdelns="$KUBECTL delete namespace"
+alias kcn="$KUBECTL config set-context \$(\$KUBECTL config current-context) --namespace"
 
 # ConfigMap management
-alias kgcm="$KUBECTL_CMD get configmaps"
-alias kecm="$KUBECTL_CMD edit configmap"
-alias kdcm="$KUBECTL_CMD describe configmap"
-alias kdelcm="$KUBECTL_CMD delete configmap"
+alias kgcm="$KUBECTL get configmaps"
+alias kecm="$KUBECTL edit configmap"
+alias kdcm="$KUBECTL describe configmap"
+alias kdelcm="$KUBECTL delete configmap"
 
 # Secret management
-alias kgsec="$KUBECTL_CMD get secret"
-alias kdsec="$KUBECTL_CMD describe secret"
-alias kdelsec="$KUBECTL_CMD delete secret"
+alias kgsec="$KUBECTL get secret"
+alias kdsec="$KUBECTL describe secret"
+alias kdelsec="$KUBECTL delete secret"
 
 # Deployment management.
-alias kgd="$KUBECTL_CMD get deployment"
+alias kgd="$KUBECTL get deployment"
 alias kgdw="kgd --watch"
 alias kgdwide="kgd -o wide"
-alias ked="$KUBECTL_CMD edit deployment"
-alias kdd="$KUBECTL_CMD describe deployment"
-alias kdeld="$KUBECTL_CMD delete deployment"
-alias ksd="$KUBECTL_CMD scale deployment"
-alias krsd="$KUBECTL_CMD rollout status deployment"
+alias ked="$KUBECTL edit deployment"
+alias kdd="$KUBECTL describe deployment"
+alias kdeld="$KUBECTL delete deployment"
+alias ksd="$KUBECTL scale deployment"
+alias krsd="$KUBECTL rollout status deployment"
 kres(){
-    $KUBECTL_CMD set env $@ REFRESHED_AT=$(date +%Y%m%d%H%M%S)
+    $KUBECTL set env $@ REFRESHED_AT=$(date +%Y%m%d%H%M%S)
 }
 
 # Rollout management.
-alias kgrs="$KUBECTL_CMD get rs"
-alias krh="$KUBECTL_CMD rollout history"
-alias kru="$KUBECTL_CMD rollout undo"
+alias kgrs="$KUBECTL get rs"
+alias krh="$KUBECTL rollout history"
+alias kru="$KUBECTL rollout undo"
 
 # Statefulset management.
-alias kgss="$KUBECTL_CMD get statefulset"
+alias kgss="$KUBECTL get statefulset"
 alias kgssw="kgss --watch"
 alias kgsswide="kgss -o wide"
-alias kess="$KUBECTL_CMD edit statefulset"
-alias kdss="$KUBECTL_CMD describe statefulset"
-alias kdelss="$KUBECTL_CMD delete statefulset"
-alias ksss="$KUBECTL_CMD scale statefulset"
-alias krsss="$KUBECTL_CMD rollout status statefulset"
+alias kess="$KUBECTL edit statefulset"
+alias kdss="$KUBECTL describe statefulset"
+alias kdelss="$KUBECTL delete statefulset"
+alias ksss="$KUBECTL scale statefulset"
+alias krsss="$KUBECTL rollout status statefulset"
 
 # Port forwarding
-alias kpf="$KUBECTL_CMD port-forward"
+alias kpf="$KUBECTL port-forward"
 
 # Tools for accessing all information
-alias kga="$KUBECTL_CMD get all"
-alias kgaa="$KUBECTL_CMD get all --all-namespaces"
+alias kga="$KUBECTL get all"
+alias kgaa="$KUBECTL get all --all-namespaces"
 
 # Logs
-alias kl="$KUBECTL_CMD logs"
-alias klf="$KUBECTL_CMD logs -f"
+alias kl="$KUBECTL logs"
+alias klf="$KUBECTL logs -f"
 
 # File copy
-alias kcp="$KUBECTL_CMD cp"
+alias kcp="$KUBECTL cp"
 
 # Node Management
-alias kgno="$KUBECTL_CMD get nodes"
-alias keno="$KUBECTL_CMD edit node"
-alias kdno="$KUBECTL_CMD describe node"
-alias kdelno="$KUBECTL_CMD delete node"
+alias kgno="$KUBECTL get nodes"
+alias keno="$KUBECTL edit node"
+alias kdno="$KUBECTL describe node"
+alias kdelno="$KUBECTL delete node"
 
 # PVC management.
-alias kgpvc="$KUBECTL_CMD get pvc"
+alias kgpvc="$KUBECTL get pvc"
 alias kgpvcw="kgpvc --watch"
-alias kepvc="$KUBECTL_CMD edit pvc"
-alias kdpvc="$KUBECTL_CMD describe pvc"
-alias kdelpvc="$KUBECTL_CMD delete pvc"
+alias kepvc="$KUBECTL edit pvc"
+alias kdpvc="$KUBECTL describe pvc"
+alias kdelpvc="$KUBECTL delete pvc"
 
 # top
-alias ktn="$KUBECTL_CMD top node"
-alias ktp="$KUBECTL_CMD top pod"
+alias ktn="$KUBECTL top node"
+alias ktp="$KUBECTL top pod"
 
 if (( $+commands[helm] )); then
     __HELM_COMPLETION_FILE="${HOME}/.zsh_cache/helm_completion"

@@ -1,13 +1,13 @@
 if (( $+commands[kubectl] )); then
-    export KUBECTL_CMD=kubectl
+    export KUBECTL=${KUBECTL:-kubectl}
 elif (( $+commands[k3s] )); then
-    export KUBECTL_CMD="k3s kubectl"
+    export KUBECTL=${KUBECTL:-k3s kubectl}
 elif (( $+commands[microk8s.kubectl] )); then
-    export KUBECTL_CMD=microk8s.kubectl
+    export KUBECTL=${KUBECTL:-microk8s.kubectl}
 fi
 
 
-if [ ! -z $KUBECTL_CMD ]; then
+if [ ! -z $KUBECTL ]; then
     source $CFG/.zshrc.d/k8s/kubectl.zsh
     source $CFG/.zshrc.d/k8s/kube-ps1.zsh
 
@@ -18,9 +18,6 @@ if [ ! -z $KUBECTL_CMD ]; then
     elif (( $+commands[k3s] )); then
         export KUBECONFIG=~/.local/etc/rancher/k3s/k3s.yaml
         # sudo k3s server --docker --no-deploy traefik
-    elif (( $+commands[kind] )); then
-        export KUBECONFIG="$(kind get kubeconfig-path --name="kind")"
-        source $CFG/.zshrc.d/k8s/kind.zsh
     fi
 
     if [[ ! "$PATH" == */opt/cni/bin* && -d /opt/cni/bin ]]; then
@@ -52,10 +49,10 @@ if [ ! -z $KUBECTL_CMD ]; then
             img=$1
         fi
 
-        echo "pull ==> $img"
-        docker pull $img
-        echo "tag ==> $tag"
-        docker tag $img $tag
-        docker rmi $img
+        echo "pull --> $img"
+        $CRICTL pull $img
+        echo "tag --> $tag"
+        $CRICTL tag $img $tag
+        $CRICTL rmi $img
     }
 fi

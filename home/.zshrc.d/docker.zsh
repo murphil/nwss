@@ -1,47 +1,51 @@
-alias d="docker"
-alias di="docker images"
-alias drmi="docker rmi"
-alias dt="docker tag"
-alias dp="docker ps"
-alias dpa="docker ps -a"
-alias dl="docker logs -ft"
-alias dpl="docker pull"
-alias dps="docker push"
-alias dr="docker run -i -t --rm -v \$(pwd):/world"
-alias drr="docker run --rm -v \$(pwd):/world"
-alias dcs="docker container stop"
-alias dcr="docker container rm"
-alias dcp="docker cp"
-alias dsp="docker system prune -f"
-alias dspa="docker system prune --all --force --volumes"
-alias dvi="docker volume inspect"
-alias dvr="docker volume rm"
-#alias dvp="docker volume prune"
-alias dvp="docker volume rm \$(docker volume ls -q | awk -F, 'length(\$0) == 64 { print }')"
-alias dvl="docker volume ls"
-alias dvc="docker volume create"
-alias dsv="docker save"
-alias dld="docker load"
-alias dh="docker history"
-alias dhl="docker history --no-trunc"
-alias dis="docker inspect"
-alias dc="docker-compose"
-alias dcu="docker-compose up"
-alias dcud="docker-compose up -d"
-alias dcd="docker-compose down"
+# $CRICTL | k3s crictl | podman
+export CRICTL=${CRICTL:-docker}
+
+alias d="$CRICTL"
+alias di="$CRICTL images"
+alias drmi="$CRICTL rmi"
+alias dt="$CRICTL tag"
+alias dp="$CRICTL ps"
+alias dpa="$CRICTL ps -a"
+alias dl="$CRICTL logs -ft"
+alias dpl="$CRICTL pull"
+alias dps="$CRICTL push"
+alias dr="$CRICTL run -i -t --rm -v \$(pwd):/world"
+alias drr="$CRICTL run --rm -v \$(pwd):/world"
+alias dcs="$CRICTL container stop"
+alias dcr="$CRICTL container rm"
+alias dcp="$CRICTL cp"
+alias dsp="$CRICTL system prune -f"
+alias dspa="$CRICTL system prune --all --force --volumes"
+alias dvi="$CRICTL volume inspect"
+alias dvr="$CRICTL volume rm"
+#alias dvp="$CRICTL volume prune"
+alias dvp="$CRICTL volume rm \$($CRICTL volume ls -q | awk -F, 'length(\$0) == 64 { print }')"
+alias dvl="$CRICTL volume ls"
+alias dvc="$CRICTL volume create"
+alias dsv="$CRICTL save"
+alias dld="$CRICTL load"
+alias dh="$CRICTL history"
+alias dhl="$CRICTL history --no-trunc"
+alias dis="$CRICTL inspect"
+
+alias dc="$CRICTL-compose"
+alias dcu="$CRICTL-compose up"
+alias dcud="$CRICTL-compose up -d"
+alias dcd="$CRICTL-compose down"
 
 function da {
     if [ $# -gt 1 ]; then
-        docker exec -it $@
+        $CRICTL exec -it $@
     else
-        docker exec -it $1 /bin/sh -c "[ -e /bin/zsh ] && /bin/zsh || [ -e /bin/bash ] && /bin/bash || /bin/sh"
+        $CRICTL exec -it $1 /bin/sh -c "[ -e /bin/zsh ] && /bin/zsh || [ -e /bin/bash ] && /bin/bash || /bin/sh"
     fi
 }
 
 function dcsr {
     local i
     for i in $*
-        docker container stop $i && docker container rm $i
+        $CRICTL container stop $i && $CRICTL container rm $i
 }
 
 _dgcn () {
@@ -52,14 +56,14 @@ _dgcn () {
         local name=$(echo $line | awk '{print $2;}')
         dsc+="$name:$rest"
         dsc+="$id:$rest"
-    done <<< $(docker container ls --format '{{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\t')
+    done <<< $($CRICTL container ls --format '{{.ID}}\t{{.Names}}\t{{.Image}}\t{{.Status}}\t{{.Ports}}\t')
     _describe containers dsc
 }
 compdef _dgcn da dcsr
 
 function dvbk {
     for i in $*
-        docker run --rm        \
+        $CRICTL run --rm        \
             -v $(pwd):/backup  \
             -v ${i}:/data      \
             alpine             \
@@ -67,13 +71,13 @@ function dvbk {
 }
 
 _dvlq () {
-    _alternative "docker volumes:volume:($(docker volume ls -q | awk -F, 'length($0) != 64 { print }'))"
+    _alternative "$CRICTL volumes:volume:($($CRICTL volume ls -q | awk -F, 'length($0) != 64 { print }'))"
 }
 compdef _dvlq dvbk
 
 function dvrs {
-    docker volume create $2
-    docker run --rm            \
+    $CRICTL volume create $2
+    $CRICTL run --rm            \
             -v $(pwd):/backup  \
             -v $2:/data        \
             alpine             \
