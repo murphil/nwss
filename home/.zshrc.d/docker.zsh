@@ -88,3 +88,15 @@ _dvrs () {
     _arguments '1:backup file:_files' '2:volume:_dvlq'
 }
 compdef _dvrs dvrs
+
+function ipl {
+  for i in $*; do
+    docker run -it --rm \
+        -v /var/run/docker.sock:/var/run/docker.sock \
+        -e http_proxy=$http_proxy \
+        -e https_proxy=$https_proxy \
+        nnurphy/k8su skopeo copy \
+        docker://$i \
+        docker-daemon:$i
+  done
+}

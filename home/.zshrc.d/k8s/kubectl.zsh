@@ -3,7 +3,7 @@ if (( $+commands[$KUBECTL] )); then
 
     if [[ ! -f $__KUBECTL_COMPLETION_FILE ]]; then
         mkdir -p ${HOME}/.zsh_cache
-        $KUBECTL completion zsh >! $__KUBECTL_COMPLETION_FILE
+        eval $KUBECTL completion zsh >! $__KUBECTL_COMPLETION_FILE
     fi
 
     [[ -f $__KUBECTL_COMPLETION_FILE ]] && source $__KUBECTL_COMPLETION_FILE
@@ -17,9 +17,6 @@ alias kg="$KUBECTL get"
 alias kd="$KUBECTL describe"
 alias ke="$KUBECTL edit"
 alias kc="$KUBECTL create"
-
-# Execute a $KUBECTL command against all namespaces
-alias kca="f(){ $KUBECTL \"\$@\" --all-namespaces;  unset -f f; }; f"
 
 # Apply a YML file
 alias kaf="$KUBECTL apply -f"
@@ -75,7 +72,7 @@ alias kens="$KUBECTL edit namespace"
 alias kdns="$KUBECTL describe namespace"
 alias kcns="$KUBECTL create namespace"
 alias kdelns="$KUBECTL delete namespace"
-alias kcn="$KUBECTL config set-context \$(\$KUBECTL config current-context) --namespace"
+alias kcn="$KUBECTL config set-context \$($KUBECTL config current-context) --namespace"
 
 # ConfigMap management
 alias kgcm="$KUBECTL get configmaps"
