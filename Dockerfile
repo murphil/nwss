@@ -1,4 +1,4 @@
-FROM debian:10-slim
+FROM ubuntu:focal
 
 ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
 ENV websocat_version=1.5.0
