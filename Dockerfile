@@ -9,7 +9,7 @@ ENV DEV_DEPS \
         openssh-server \
         curl \
         nginx \
-        vim \
+        neovim \
         rsync \
         iproute2 \
         wget \

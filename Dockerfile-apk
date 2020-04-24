@@ -10,7 +10,7 @@ ENV DEV_DEPS \
         curl \
         nginx \
         bash \
-        vim \
+        neovim \
         rsync \
         iproute2 \
         wget
