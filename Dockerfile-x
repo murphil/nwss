@@ -10,7 +10,7 @@ RUN set -eux \
       inetutils-ping net-tools \
       sudo mlocate procps zstd bzip2 unzip tree \
       curl wget socat jq \
-      bash zsh neovim git build-essential tmux \
+      bash zsh neovim git build-essential \
       openssh-client openssh-server \
   ; sed -i 's/^.*\(%sudo.*\)ALL$/\1NOPASSWD:ALL/g' /etc/sudoers \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
