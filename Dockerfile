@@ -24,10 +24,6 @@ RUN set -eux \
     locales \
     xz-utils \
     $DEV_DEPS \
-  ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
-  ; curl --fail --silent -L ${s6url} | \
-    tar xzvf - -C / \
-  ; chmod go-w /etc \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
@@ -47,7 +43,13 @@ RUN set -eux \
   ; rm -rf /etc/nginx/sites-enabled/* \
   \
   ; wget -q -O /usr/local/bin/websocat ${websocat_url} \
-    ; chmod a+x /usr/local/bin/websocat
+    ; chmod a+x /usr/local/bin/websocat \
+  \
+  ; curl --fail --silent -L ${s6url} | \
+    tar xzvf - -C / \
+  ; chmod go-w /etc \
+  \
+  ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 COPY services.d /etc/services.d
 COPY nginx.default.conf /etc/nginx/conf.d/default.conf
