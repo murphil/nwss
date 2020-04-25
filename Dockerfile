@@ -5,7 +5,6 @@ ENV websocat_version=1.5.0
 ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
 ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
 ENV DEV_DEPS \
-        locales \
         openssh-server \
         curl \
         nginx \
@@ -19,11 +18,12 @@ ENV DEV_DEPS \
 RUN set -eux \
   ; apt-get update \
   ; apt-get install -y --no-install-recommends \
- 		apt-transport-https \
-		ca-certificates \
+    apt-transport-https \
+    ca-certificates \
     tzdata \
-		xz-utils \
-		$DEV_DEPS \
+    locales \
+    xz-utils \
+    $DEV_DEPS \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   ; curl --fail --silent -L ${s6url} | \
     tar xzvf - -C / \
@@ -32,9 +32,9 @@ RUN set -eux \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
   ; sed -i /etc/locale.gen \
-		-e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
-		-e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
-	; locale-gen \
+    -e 's/# \(en_US.UTF-8 UTF-8\)/\1/' \
+    -e 's/# \(zh_CN.UTF-8 UTF-8\)/\1/' \
+  ; locale-gen \
   \
   ; mkdir -p /var/run/sshd \
   ; sed -i /etc/ssh/sshd_config \
