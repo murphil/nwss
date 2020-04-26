@@ -23,7 +23,6 @@ RUN set -eux \
 		$DEV_DEPS \
   ; curl --fail --silent -L ${s6url} | \
     tar xzvf - -C / \
-  ; chmod go-w /etc \
   \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
