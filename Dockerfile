@@ -33,6 +33,10 @@ RUN set -eux \
     xz-utils \
     $DEV_DEPS \
   \
+  ; curl --fail --silent -L ${s6url} | \
+    tar xzvf - -C / \
+  ; chmod go-w /etc \
+  \
   ; sed -i 's/^.*\(%sudo.*\)ALL$/\1NOPASSWD:ALL/g' /etc/sudoers \
   ; ln -sf /usr/share/zoneinfo/$TIMEZONE /etc/localtime \
   ; echo "$TIMEZONE" > /etc/timezone \
@@ -61,10 +65,6 @@ RUN set -eux \
       wasmtime-v${wasmtime_version}-x86_64-linux/wasmtime \
   ; wget -q -O- ${watchexec_url} \
       | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
-  \
-  ; curl --fail --silent -L ${s6url} | \
-    tar xzvf - -C / \
-  ; chmod go-w /etc \
   \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
