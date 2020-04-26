@@ -24,7 +24,9 @@ ENV DEV_DEPS \
 COPY home /root/
 RUN set -eux \
   ; apt-get update \
-  ; apt-get install -y --no-install-recommends \
+  ; apt-get upgrade -y \
+  ; DEBIAN_FRONTEND=noninteractive \
+    apt-get install -y --no-install-recommends \
     ca-certificates \
     tzdata \
     locales \
