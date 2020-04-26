@@ -63,9 +63,9 @@ RUN set -eux \
       | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
   \
   ; curl --fail --silent -L ${s6url} > /tmp/s6overlay.tar.gz \
-    ; tar xzf /tmp/s6overlay.tar.gz -C / --exclude="./bin" \
-    ; tar xzf /tmp/s6overlay.tar.gz -C /usr ./bin \
-    ; rm -f /tmp/s6overlay.tar.gz \
+  ; tar xzf /tmp/s6overlay.tar.gz -C / --exclude="./bin" \
+  ; tar xzf /tmp/s6overlay.tar.gz -C /usr ./bin \
+  ; rm -f /tmp/s6overlay.tar.gz \
   \
   ; apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
