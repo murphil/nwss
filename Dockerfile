@@ -5,6 +5,7 @@ ENV websocat_version=1.5.0
 ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
 ARG s6url=https://github.com/just-containers/s6-overlay/releases/download/v1.22.1.0/s6-overlay-amd64.tar.gz
 ENV DEV_DEPS \
+        bash \
         openssh-server \
         curl \
         nginx \
