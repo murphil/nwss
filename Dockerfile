@@ -52,13 +52,13 @@ RUN set -eux \
   ; wget -q -O /usr/local/bin/websocat ${websocat_url} \
     ; chmod a+x /usr/local/bin/websocat \
   ; wget -q -O- ${just_url} \
-    | tar zxf - -C /usr/local/bin just \
+      | tar zxf - -C /usr/local/bin just \
   ; wget -q -O /usr/local/bin/yq ${yq_url} \
-    ; chmod +x /usr/local/bin/yq \
+      ; chmod +x /usr/local/bin/yq \
   ; wget -O- ${wasmtime_url} | tar Jxf - --strip-components=1 -C /usr/local/bin \
-        wasmtime-v${wasmtime_version}-x86_64-linux/wasmtime
+      wasmtime-v${wasmtime_version}-x86_64-linux/wasmtime \
   ; wget -q -O- ${watchexec_url} \
-    | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
+      | tar Jxf - --strip-components=1 -C /usr/local/bin watchexec-${watchexec_version}-x86_64-unknown-linux-musl/watchexec \
   \
   ; curl --fail --silent -L ${s6url} | \
     tar xzvf - -C / \
