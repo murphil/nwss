@@ -4,21 +4,20 @@ alias rs="rsync -avP"
 
 function s {
     local password="-o IdentitiesOnly=yes "
-    local ignore_host_check=""
     local cmd="ssh "
     local show=""
     local shell=""
-    eval set -- $(getopt -o VPIi:p:R:L:D:ZB -- "$@")
+    eval set -- $(getopt -o VPIi:p:u:R:L:D:ZB -- "$@")
     while true; do
         case "$1" in
         -V)
             show="1"
             ;;
-        -I)
-            ignore_host_check="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
-            ;;
         -P)
             password=""
+            ;;
+        -I)
+            cmd+="-o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
             ;;
         -i)
             shift
@@ -27,6 +26,10 @@ function s {
         -p)
             shift
             cmd+="-p $1 "
+            ;;
+        -u)
+            shift
+            cmd+="-o ProxyCommand='websocat -bE - $1' "
             ;;
         -R)
             shift
@@ -54,7 +57,7 @@ function s {
         shift
     done
 
-    cmd+="${password}${ignore_host_check}$1"
+    cmd+="${password}$1"
     if [ ! -z $2 ]; then
         shift
         cmd+=" ${shell}'$@'"
