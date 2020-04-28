@@ -41,37 +41,3 @@ function _comp_entf {
 }
 
 compdef _comp_entf entf
-
-function wstun {
-    local listen="127.0.0.1:2288"
-    local url
-    local cmd
-    local protocol="ws"
-    eval set -- $(getopt -o l:s -- "$@")
-    while true; do
-        case "$1" in
-        -l)
-            shift
-            listen=$1
-            ;;
-        -s)
-            protocol="wss"
-            ;;
-        --)
-            shift
-            break
-            ;;
-        esac
-        shift
-    done
-
-    if [ -z $2 ]; then
-        url=$1
-    else
-        url="$1/$2"
-    fi
-    cmd="websocat -E -b tcp-l:${listen} $protocol://$url"
-
-    echo $cmd
-    eval $cmd
-}
