@@ -38,6 +38,9 @@ alias t='tmux'
 alias tl='tmux list-sessions'
 alias ta='tmux attach -t'
 
+function take() {
+    mkdir -p $@ && cd ${@:$#}
+}
 function px { ps aux | grep -i "$*" }
 function p { pgrep -a "$*" }
 __default_indirect_object="local z=\${@: -1} y=\$1 && [[ \$z == \$1 ]] && y=\"\$default\""
