@@ -66,8 +66,8 @@ function dvbk {
         $CRICTL run --rm        \
             -v $(pwd):/backup  \
             -v ${i}:/data      \
-            alpine             \
-            tar zcvf /backup/vol_${i}_`date +%Y%m%d%H%M%S`.tar.gz -C /data .
+            ubuntu:focal \
+            tar --transform='s/^\.//' -zcvf /backup/vol_${i}_`date +%Y%m%d%H%M%S`.tar.gz -C /data .
 }
 
 _dvlq () {
