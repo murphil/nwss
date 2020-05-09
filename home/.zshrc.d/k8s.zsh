@@ -30,31 +30,4 @@ if [ ! -z $KUBECTL ]; then
           | xargs -n2 -l bash -c "$KUBECTL delete pods \$0 --namespace=\$1"
     }
 
-    function dplm {
-        if [[ $1 =~ '.*@sha256.*' ]]; then
-            tag=$(echo $1 | awk -F'@sha256:' '{print $1}')
-        # elif [[ $1 =~ '^nnurphy/' ]]; then
-        #     tag=$(echo $1 | sed 's!^nnurphy/!!')
-        else
-            tag=$1
-        fi
-
-        if [[ $1 =~ '^gcr.io/' ]]; then
-            img=$(echo $1 | sed 's!^gcr.io/!gcr.azk8s.cn/!')
-        elif [[ $1 =~ '^k8s.gcr.io/' ]]; then
-            img=$(echo $1 | sed 's!^k8s.gcr.io/!gcr.azk8s.cn/google-containers/!')
-        elif [[ $1 =~ '^quay.io/'  ]]; then
-            img=$(echo $1 | sed 's!^quay.io/!quay.azk8s.cn/!')
-        elif [[ ! $1 =~ '/' ]]; then
-            img=$(echo "library/$1")
-        else
-            img=$1
-        fi
-
-        echo "pull --> $img"
-        $CRICTL pull $img
-        echo "tag --> $tag"
-        $CRICTL tag $img $tag
-        $CRICTL rmi $img
-    }
 fi
