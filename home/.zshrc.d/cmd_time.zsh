@@ -1,5 +1,5 @@
 _command_time_preexec() {
-  timer=${timer:-$(($(date +%s%0N)/1000000))}
+  timer=${timer:-${$(($EPOCHREALTIME*1000))%.*}}
   ZSH_COMMAND_TIME_MSG=${ZSH_COMMAND_TIME_MSG-"Time: %s"}
   ZSH_COMMAND_TIME_COLOR=${ZSH_COMMAND_TIME_COLOR-"white"}
   export ZSH_COMMAND_TIME=""
@@ -7,7 +7,7 @@ _command_time_preexec() {
 
 _command_time_precmd() {
   if [ $timer ]; then
-    timer_show=$(($(($(date +%s%0N)/1000000)) - $timer))
+    timer_show=$((${$(($EPOCHREALTIME*1000))%.*} - $timer))
     if [ -n "$TTY" ] && [ $timer_show -ge ${ZSH_COMMAND_TIME_MIN_SECONDS:-3000} ] || [ -n "$timing" ]; then
       export ZSH_COMMAND_TIME="$timer_show"
       if [ ! -z ${ZSH_COMMAND_TIME_MSG} ]; then
