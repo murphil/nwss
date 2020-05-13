@@ -41,7 +41,9 @@ zsh_command_time() {
         min=$(($ZSH_COMMAND_TIME/60000%60))
         sec=$(($ZSH_COMMAND_TIME/1000%60))
         ms=$(($ZSH_COMMAND_TIME%1000))
-        if [ "$ZSH_COMMAND_TIME" -le 60000 ]; then
+        if [ "$ZSH_COMMAND_TIME" -le 1000 ]; then
+            timer_show="$fg[green]$ms ms."
+        elif [ "$ZSH_COMMAND_TIME" -gt 1000 ] && [ "$ZSH_COMMAND_TIME" -le 60000 ]; then
             timer_show="$fg[green]$sec s. $ms ms."
         elif [ "$ZSH_COMMAND_TIME" -gt 60000 ] && [ "$ZSH_COMMAND_TIME" -le 180000 ]; then
             timer_show="$fg[yellow]$min min. $sec s. $ms ms."
