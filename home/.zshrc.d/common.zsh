@@ -37,6 +37,8 @@ alias e='code'
 alias t='tmux'
 alias tl='tmux list-sessions'
 alias ta='tmux attach -t'
+alias x='export'
+alias o='echo'
 
 function take() {
     mkdir -p $@ && cd ${@:$#}
