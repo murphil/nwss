@@ -1,3 +1,5 @@
+zmodload zsh/datetime
+
 _command_time_preexec() {
   timer=${timer:-${$(($EPOCHREALTIME*1000))%.*}}
   ZSH_COMMAND_TIME_MSG=${ZSH_COMMAND_TIME_MSG-"Time: %s"}
