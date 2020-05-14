@@ -6,7 +6,7 @@ ENV just_version=0.5.10
 ENV yq_version=3.3.0
 ENV wasmtime_version=0.15.0
 ENV watchexec_version=1.12.0
-ENV s6overlay_version=2.0.0.0
+ENV s6overlay_version=2.0.0.1
 
 ARG websocat_url=https://github.com/vi/websocat/releases/download/v${websocat_version}/websocat_amd64-linux-static+udp
 ARG s6overlay_url=https://github.com/just-containers/s6-overlay/releases/download/v${s6overlay_version}/s6-overlay-amd64.tar.gz
