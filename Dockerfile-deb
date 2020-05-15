@@ -4,7 +4,7 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8 TIMEZONE=Asia/Shanghai
 ENV websocat_version=1.5.0
 ENV just_version=0.5.10
 ENV yq_version=3.3.0
-ENV wasmtime_version=0.15.0
+ENV wasmtime_version=0.16.0
 ENV watchexec_version=1.12.0
 ENV s6overlay_version=2.0.0.1
 
